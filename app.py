@@ -20,10 +20,7 @@ from vectorstore import (
 )
 from rag_pipeline import RAGPipeline
 
-
-# =========================================================
 # PAGE CONFIG
-# =========================================================
 
 st.set_page_config(
     page_title="DocuMind | AI Document Assistant",
@@ -32,10 +29,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-
-# =========================================================
 # THEME  (palette taken from the reference image)
-# =========================================================
 
 st.markdown(
     """
@@ -208,10 +202,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-
-# =========================================================
 # HELPERS
-# =========================================================
 
 ROBOT_SVG = """
 <svg width="{s}" height="{s}" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -258,22 +249,21 @@ def robot_html(size: int) -> str:
             f'style="width:{size}px;height:auto;max-width:100%;border-radius:16px">'
         )
     else:
-        inner = ROBOT_SVG.format(s=size)
+        inner=ROBOT_SVG.format(s=size)
     return f'<div class="robot">{inner}</div>'
 
 
 def index_documents(documents, document_id, document_name):
-    chunks = split_documents(documents)
+    chunks=split_documents(documents)
     if not chunks:
         return 0
     create_vector_store(
-        chunks=chunks, document_id=document_id, document_name=document_name
+        chunks=chunks,document_id=document_id,document_name=document_name
     )
     st.session_state.selected_document = document_id
     st.session_state.chat_history.setdefault(document_id, [])
     st.session_state.chat_started = False
     return len(chunks)
-
 
 def process_pdf(uploaded_file):
     file_bytes = uploaded_file.getvalue()
@@ -292,16 +282,12 @@ def process_pdf(uploaded_file):
         raise ValueError("No text could be extracted from this PDF.")
     return index_documents(documents, document_id, uploaded_file.name)
 
-
 def process_text(title, text):
     document_id = hashlib.sha256(text.encode("utf-8")).hexdigest()[:20]
     docs = [Document(page_content=text, metadata={"page": 0, "source": title})]
     return index_documents(docs, document_id, title)
 
-
-# =========================================================
 # INIT
-# =========================================================
 
 @st.cache_resource
 def initialize_pipeline():
@@ -330,9 +316,7 @@ messages = (
 chat_started = has_document and (bool(messages) or st.session_state.chat_started)
 
 
-# =========================================================
 # TOP BAR  (compact header once the chat has started)
-# =========================================================
 
 if chat_started:
     c1, c2, c3 = st.columns([6, 1.3, 1.1], vertical_alignment="center")
@@ -357,9 +341,7 @@ if chat_started:
             st.rerun()
 
 
-# =========================================================
 # HERO  (before the user uploads / asks anything)
-# =========================================================
 
 else:
     if has_document:
@@ -461,9 +443,7 @@ else:
                     st.rerun()
 
 
-# =========================================================
 # CHAT
-# =========================================================
 
 if has_document:
     for message in messages:
