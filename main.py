@@ -30,9 +30,9 @@ def main():
     print(f"Created {len(chunks)} chunks")
 
     # 4. Store embeddings
-    document_id = hashlib.sha256(
+    document_id=hashlib.sha256(
     file_path.encode("utf-8")).hexdigest()[:16]
-    collection = create_vector_store(chunks,
+    collection=create_vector_store(chunks,
     document_id=document_id)
 
     # 5. Create RAG pipeline
