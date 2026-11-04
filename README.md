@@ -5,7 +5,7 @@ An AI-powered **Retrieval-Augmented Generation (RAG) Chatbot** that allows users
 The application combines document processing, text chunking, embeddings, vector search, and Google's Gemini API to generate answers grounded in the uploaded document content.
 
 ## 🚀 Project Overview
-
+ 
 Traditional chatbots generate answers from their pretrained knowledge. This project uses Retrieval-Augmented Generation (RAG) to retrieve relevant information from documents before generating a response.
 
 Users can provide documents and ask questions in natural language. The system retrieves relevant document chunks and passes the retrieved context to the LLM to generate a context-aware response.
