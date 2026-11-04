@@ -1,0 +1,23 @@
+from langchain_community.document_loaders import PyPDFLoader
+import re 
+
+def document_loader(data):
+
+    content=data.load()
+
+    pages=[]
+
+    for page in content:
+        pages.append(page.page_content)
+
+    return '\n'.join(pages).strip()
+try: 
+    pdf=PyPDFLoader(r'D:\rag-ai-chatbot\data\Anusha_C_AI_ML.pdf')
+
+    extracted_text=document_loader(pdf)
+    print(extracted_text[:500])
+    
+except Exception as e:
+    print(f'File not found: {e}')
+
+print(document_loader())
